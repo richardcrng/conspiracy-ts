@@ -14,6 +14,7 @@ function Role({ inAConspiracyAgainst } : Props) {
     <>
       <Modal
         footer={[{ text: 'Hide role', onPress: toggleReveal }]}
+        transparent
         visible={revealed}
       >
         <div style={{ height: '100px' }}>
