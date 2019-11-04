@@ -8,7 +8,7 @@ import { render, fireEvent, waitForElement, getByTitle, Matcher, MatcherOptions,
 import '@testing-library/jest-dom/extend-expect'
 
 import Role from './Role'
-import { delay } from '../../../utils/test-utils'
+import { delay } from 'utils/test-utils'
 
 let container: HTMLElement
 let parentElement: HTMLElement | null
