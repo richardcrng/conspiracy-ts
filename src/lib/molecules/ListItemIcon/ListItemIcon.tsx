@@ -2,15 +2,12 @@ import React from 'react';
 import { IconType } from 'react-icons/lib/cjs';
 import { List } from 'antd-mobile';
 
-type IconIdentifier = string | IconType | { ios: string, md: string }
-
 interface Props {
   children?: React.ReactNode
-  icon?: IconIdentifier
-  lines?: "full" | "inset" | "none"
+  icon?: IconType | React.ReactNode
 }
 
-function ListItemIcon({ children, icon, lines } : Props) {
+function ListItemIcon({ children, icon } : Props) {
   return (
     <List.Item extra={icon ? <Icon icon={icon} /> : null}>
       {children}
@@ -18,16 +15,16 @@ function ListItemIcon({ children, icon, lines } : Props) {
   )
 }
 
-function Icon({ icon: IconProp } : { icon: IconIdentifier }) {
-  if (typeof IconProp === 'function') {
-    return (
-      <span data-testid='icon-of-ListItemIcon' slot='end'>
-        <IconProp />
-      </span>
-    )
-  } else {
-    return null
-  }
+function Icon({ icon: IconProp }: { icon: IconType | React.ReactNode }) {
+  return (
+    <span data-testid='icon-of-ListItemIcon' slot='end'>
+      {
+        typeof IconProp === 'function'
+          ? <IconProp />
+          : {IconProp}
+      }
+    </span>
+  )
 }
 
 export default ListItemIcon;

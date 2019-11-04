@@ -2,11 +2,12 @@ import * as R from 'ramda'
 import React, { ReactNode } from 'react';
 import ListItemIcon from '../ListItemIcon';
 import { IoMdCheckboxOutline } from 'react-icons/io'
+import { IconType } from 'react-icons/lib/cjs';
 
 interface Props {
   boolean?: boolean
   children?: ReactNode
-  icon?: { ios: string, md: string }
+  icon?: IconType
   lines?: "full" | "inset" | "none"
 }
 
