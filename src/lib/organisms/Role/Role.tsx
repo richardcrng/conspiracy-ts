@@ -1,5 +1,6 @@
 import React from 'react';
-import ModalButton from 'lib/molecules/ModalButton';
+import ModalTrigger from 'lib/molecules/ModalTrigger';
+import { Button } from 'antd-mobile';
 
 interface Props {
   inAConspiracyAgainst?: string
@@ -9,13 +10,15 @@ function Role({ inAConspiracyAgainst } : Props) {
 
   return (
     <>
-      <ModalButton
+      <ModalTrigger
         buttons={[{ text: 'Hide role' }]}
         title='Your role'
         message={<RoleDeclare inAConspiracyAgainst={inAConspiracyAgainst} />}
       >
-        Reveal role
-      </ModalButton>
+        <Button>
+          Reveal role
+        </Button>
+      </ModalTrigger>
     </>
   )
 }
