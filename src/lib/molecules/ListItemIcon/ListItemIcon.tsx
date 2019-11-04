@@ -4,7 +4,7 @@ import { List } from 'antd-mobile';
 
 interface Props {
   children?: React.ReactNode
-  icon?: IconType | React.ReactNode
+  icon?: IconType | React.FunctionComponent
 }
 
 function ListItemIcon({ children, icon } : Props) {
@@ -15,7 +15,7 @@ function ListItemIcon({ children, icon } : Props) {
   )
 }
 
-function Icon({ icon: IconProp }: { icon: IconType | React.ReactNode }) {
+function Icon({ icon: IconProp }: { icon: IconType | React.FunctionComponent }) {
   return (
     <span data-testid='icon-of-ListItemIcon' slot='end'>
       {
