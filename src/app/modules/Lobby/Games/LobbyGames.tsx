@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaDoorOpen } from 'react-icons/fa';
 import GroupListItemIcons from 'lib/molecules/GroupListItemIcons';
 
 interface Props {
@@ -13,6 +14,7 @@ function LobbyGames({ data = [], onGameClick } : Props) {
   return (
     <GroupListItemIcons<string>
       data={gameNames}
+      icon={() => <FaDoorOpen size={32} />}
       ids={gameIds}
       onItemClick={onGameClick}
       onItemClickData={gameIds}
