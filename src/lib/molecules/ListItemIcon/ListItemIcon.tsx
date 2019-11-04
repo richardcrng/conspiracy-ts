@@ -4,7 +4,7 @@ import { List } from 'antd-mobile';
 
 interface Props {
   children?: React.ReactNode
-  icon?: IconType | React.FunctionComponent
+  icon?: IconType | React.FunctionComponent | undefined
 }
 
 function ListItemIcon({ children, icon } : Props) {
