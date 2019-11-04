@@ -5,15 +5,16 @@ import ListItemIcon from '../ListItemIcon';
 interface Props {
   data: React.ReactNode[]
   icon?: IconType | React.FunctionComponent
+  ids?: (string | number)[]
 }
 
-function GroupListItemIcons({ data, icon }: Props) {
+function GroupListItemIcons({ data, icon, ids }: Props) {
   return (
     <>
       {
         data.map((children, index) => (
           <ListItemIcon
-            key={String(children) + String(index)}
+            key={ids && ids[index] ? ids[index] : String(children) + String(index)}
             icon={icon}
           >
             {children}

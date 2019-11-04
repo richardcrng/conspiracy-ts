@@ -16,15 +16,17 @@ let getByRole: (text: Matcher, options?: MatcherOptions | undefined) => HTMLElem
 let getByText: (text: Matcher, options?: MatcherOptions | undefined) => HTMLElement
 let getByTestId: (text: Matcher, options?: MatcherOptions | undefined) => HTMLElement
 
-describe('GIVEN a list of games', () => {
+describe('GIVEN a list of games and a callback function', () => {
   const games = [
     { name: 'First game', id: '3f110' },
     { name: 'Second game', id: 'few39' }
   ]
 
+  const callback = jest.fn()
+
   describe('WHEN this is passed to LobbyGames', () => {
     beforeEach(() => {
-      ({ container } = render(<LobbyGames games={games} />))
+      ({ container } = render(<LobbyGames data={games} onGameClick={callback} />))
     })
 
     test('THEN the games are all listed', () => {
