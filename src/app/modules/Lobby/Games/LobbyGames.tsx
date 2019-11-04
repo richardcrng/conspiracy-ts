@@ -3,13 +3,19 @@ import GroupListItemIcons from 'lib/molecules/GroupListItemIcons';
 
 interface Props {
   data?: { name: string, id: string }[]
+  onGameClick?(event: React.MouseEvent, gameId: string): void
 }
 
-function LobbyGames({ data = []} : Props) {
+function LobbyGames({ data = [], onGameClick } : Props) {
+  const gameNames = data.map(({ name }) => name)
+  const gameIds = data.map(({ id }) => id)
+
   return (
-    <GroupListItemIcons
-      data={data.map(({ name }) => name)}
-      ids={data.map(({ id }) => id)}
+    <GroupListItemIcons<string>
+      data={gameNames}
+      ids={gameIds}
+      onItemClick={onGameClick}
+      onItemClickData={gameIds}
     />
   )
 }

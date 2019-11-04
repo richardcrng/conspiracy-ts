@@ -2,14 +2,21 @@ import React from 'react';
 import { IconType } from 'react-icons/lib/cjs';
 import { List } from 'antd-mobile';
 
-interface Props {
+interface Props<T = any> {
   children?: React.ReactNode
   icon?: IconType | React.FunctionComponent | undefined
+  onClickDatum?: T
+  onClick?(event?: React.MouseEvent, datum?: T): void
 }
 
-function ListItemIcon({ children, icon } : Props) {
+function ListItemIcon<T = any>({ children, icon, onClick, onClickDatum } : Props<T>) {
   return (
-    <List.Item extra={icon ? <Icon icon={icon} /> : null}>
+    <List.Item
+      extra={icon ? <Icon icon={icon} /> : null}
+      onClick={(e) => {
+        onClick && onClick(e, onClickDatum)
+      }}
+    >
       {children}
     </List.Item>
   )

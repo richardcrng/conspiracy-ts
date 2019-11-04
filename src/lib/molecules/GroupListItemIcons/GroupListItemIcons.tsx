@@ -2,20 +2,24 @@ import React from 'react';
 import { IconType } from 'react-icons/lib/cjs';
 import ListItemIcon from '../ListItemIcon';
 
-interface Props {
+interface Props<T = any> {
   data: React.ReactNode[]
   icon?: IconType | React.FunctionComponent
   ids?: (string | number)[]
+  onItemClick? (event?: React.MouseEvent, itemOnClickDatum?: T): void
+  onItemClickData?: T[]
 }
 
-function GroupListItemIcons({ data, icon, ids }: Props) {
+function GroupListItemIcons<T = any>({ data, icon, ids, onItemClick, onItemClickData }: Props<T>) {
   return (
     <>
       {
         data.map((children, index) => (
-          <ListItemIcon
+          <ListItemIcon<T>
             key={ids && ids[index] ? ids[index] : String(children) + String(index)}
             icon={icon}
+            onClickDatum={onItemClickData ? onItemClickData[index] : undefined}
+            onClick={onItemClick}
           >
             {children}
           </ListItemIcon>

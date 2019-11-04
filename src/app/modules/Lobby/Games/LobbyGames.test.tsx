@@ -26,12 +26,24 @@ describe('GIVEN a list of games and a callback function', () => {
 
   describe('WHEN this is passed to LobbyGames', () => {
     beforeEach(() => {
-      ({ container } = render(<LobbyGames data={games} onGameClick={callback} />))
+      ({ container, getByText } = render(<LobbyGames data={games} onGameClick={callback} />))
     })
 
     test('THEN the games are all listed', () => {
       expect(container).toHaveTextContent('First game')
       expect(container).toHaveTextContent('Second game')
+    })
+
+    describe('AND when the first game is clicked', () => {
+      beforeEach(() => {
+        fireEvent.click(getByText('First game'))
+      })
+
+      test('THEN the callback function has been called with the correct game id', () => {
+        expect(callback).toHaveBeenCalled()
+        const lastCallArgs = callback.mock.calls[callback.mock.calls.length - 1]
+        expect(lastCallArgs).toContain('3f110')
+      })
     })
   })
 })
