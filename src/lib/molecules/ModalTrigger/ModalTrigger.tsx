@@ -1,6 +1,5 @@
-import * as R from 'ramda'
 import React from 'react';
-import { Button, Modal } from 'antd-mobile'
+import { Modal } from 'antd-mobile'
 
 interface Props {
   buttons: { text: string, dismissOnPress?: boolean, onPress?: () => void }[]
