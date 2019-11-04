@@ -1,5 +1,5 @@
 // import dependencies
-import React, { ReactNode } from 'react'
+import React from 'react'
 
 // import react-testing methods
 import { render, fireEvent, waitForElement, getByTitle, Matcher, MatcherOptions, queryByTestId, getByLabelText, getAllByTestId, queryAllByTestId } from '@testing-library/react'
@@ -7,7 +7,8 @@ import { render, fireEvent, waitForElement, getByTitle, Matcher, MatcherOptions,
 // add custom jest matchers from jest-dom
 import '@testing-library/jest-dom/extend-expect'
 
-import GroupListItemBooleans from './GroupListItemBooleans';
+import { IoMdAddCircle } from 'react-icons/io'
+import GroupListItemIcons from './GroupListItemIcons';
 
 let container: HTMLElement
 let getByText: (text: Matcher, options?: MatcherOptions | undefined) => HTMLElement
@@ -16,12 +17,12 @@ let getByTestId: (text: Matcher, options?: MatcherOptions | undefined) => HTMLEl
 describe('It converts an array of data into an appropriate list of elements', () => {
   describe('GIVEN an array of data with no ids', () => {
     beforeEach(() => {
-      const data: [string, boolean][] = [
-        ['Richard', true],
-        ['Gregor', false],
-        ['Jules', true]
+      const data = [
+        'Richard',
+        'Gregor',
+        'Jules'
       ];
-      ({ container, getByText } = render(<GroupListItemBooleans data={data} />))
+      ({ container, getByText } = render(<GroupListItemIcons data={data} icon={IoMdAddCircle} />))
     })
 
     test('THEN it renders all of the text from the first element of each element in the array', () => {
@@ -30,8 +31,10 @@ describe('It converts an array of data into an appropriate list of elements', ()
       expect(getByText('Jules')).toBeDefined()
     })
 
-    test('AND it renders an icon for every true in the second element of each element in the array', () => {
-      expect(queryAllByTestId(container, 'icon-of-ListItemIcon')).toHaveLength(2)
+    test('AND it renders an icon for every element in the array', () => {
+      expect(queryAllByTestId(container, 'icon-of-ListItemIcon')).toHaveLength(3)
     })
   })
 })
+
+

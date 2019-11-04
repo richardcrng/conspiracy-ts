@@ -7,7 +7,7 @@ interface Props {
   icon?: IconType | React.FunctionComponent
 }
 
-function GroupListItemBooleans({ data, icon } : Props) {
+function GroupListItemBooleans({ data, icon }: Props) {
   return (
     <>
       {

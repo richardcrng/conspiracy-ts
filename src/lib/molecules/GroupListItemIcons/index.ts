@@ -1,3 +1,3 @@
-import GroupListItemBooleans from "./GroupListItemBooleans";
+import GroupListItemIcons from "./GroupListItemIcons";
 
-export default GroupListItemBooleans
+export default GroupListItemIcons
