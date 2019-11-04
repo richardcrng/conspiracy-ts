@@ -72,6 +72,34 @@ describe("Reveals and hides modal title, message and buttons", () => {
           expect(parentElement).not.toHaveTextContent("Capture")
         })
       })
+
+      describe("AND a button with dismissOnPress as true is clicked", () => {
+        beforeEach(async () => {
+          fireEvent.click(getByText('Capture'))
+          await delay(100)
+        })
+
+        it("THEN the modal is hidden again", () => {
+          expect(parentElement).not.toHaveTextContent("Wild Pokémon appeared!")
+          expect(parentElement).not.toHaveTextContent("It's a Pikachu!")
+          expect(parentElement).not.toHaveTextContent("Run away")
+          expect(parentElement).not.toHaveTextContent("Capture")
+        })
+      })
+
+      describe("AND a button with dismissOnPress as false is clicked", () => {
+        beforeEach(async () => {
+          fireEvent.click(getByText('Battle'))
+          await delay(100)
+        })
+
+        it("THEN the modal is not yet hidden", () => {
+          expect(parentElement).toHaveTextContent("Wild Pokémon appeared!")
+          expect(parentElement).toHaveTextContent("It's a Pikachu!")
+          expect(parentElement).toHaveTextContent("Run away")
+          expect(parentElement).toHaveTextContent("Capture")
+        })
+      })
     })
   })
 })
