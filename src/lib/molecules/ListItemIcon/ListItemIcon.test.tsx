@@ -63,4 +63,19 @@ describe("ListItemIcon shows a React icon when passed it as an icon prop", () =>
       expect(getAllByTestId(container, 'icon-of-ListItemIcon')).toHaveLength(1)
     })
   })
+
+  describe("WHEN ListItemIcon is passed a function to render an icon component", () => {
+    beforeEach(() => {
+      ({ getByTestId, container } = render(
+        <ListItemIcon icon={() => <IoMdCheckbox />}>
+          Richard
+        </ListItemIcon>
+      ))
+    })
+
+    test("THEN it shows one icon", () => {
+      expect(getByTestId('icon-of-ListItemIcon')).toBeDefined()
+      expect(getAllByTestId(container, 'icon-of-ListItemIcon')).toHaveLength(1)
+    })
+  })
 })

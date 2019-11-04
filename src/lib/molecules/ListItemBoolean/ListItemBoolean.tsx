@@ -1,19 +1,19 @@
 import * as R from 'ramda'
-import React, { ReactNode } from 'react';
+import React from 'react';
 import ListItemIcon from '../ListItemIcon';
 import { IoMdCheckboxOutline } from 'react-icons/io'
+import { IconType } from 'react-icons/lib/cjs';
 
 interface Props {
   boolean?: boolean
-  children?: ReactNode
-  icon?: { ios: string, md: string }
-  lines?: "full" | "inset" | "none"
+  children?: React.ReactNode
+  icon?: IconType | React.FunctionComponent
 }
 
-function ListItemBoolean({ boolean, children, icon, lines } : Props) {
+function ListItemBoolean({ boolean, children, icon } : Props) {
   const iconToUse = R.defaultTo(IoMdCheckboxOutline, icon)
   return (
-    <ListItemIcon icon={boolean ? iconToUse : undefined} lines={lines}>
+    <ListItemIcon icon={boolean ? iconToUse : undefined}>
       {children}
     </ListItemIcon>
   )
