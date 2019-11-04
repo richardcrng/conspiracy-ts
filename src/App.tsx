@@ -2,13 +2,13 @@ import React from 'react';
 import './App.css';
 import 'antd-mobile/dist/antd-mobile.css'
 import { WingBlank } from 'antd-mobile';
-import LobbyGames from 'app/modules/Lobby/Games';
+import Lobby from 'app/modules/Lobby';
 
 const App: React.FC = () => {
   return (
     <div className="App">
       <WingBlank>
-        <LobbyGames
+        <Lobby
           data={[
             { name: 'Game one', id: '243x' },
             { name: 'second', id: 'xâ3' }
