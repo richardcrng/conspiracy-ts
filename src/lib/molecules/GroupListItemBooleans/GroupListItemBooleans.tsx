@@ -1,13 +1,13 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import ListItemBoolean from '../ListItemBoolean';
+import { IconType } from 'react-icons/lib/cjs';
 
 interface Props {
-  data: [ReactNode, boolean][]
-  icon?: { ios: string, md: string }
-  lines?: "full" | "inset" | "none"
+  data: [React.ReactNode, boolean][]
+  icon?: IconType | React.FunctionComponent
 }
 
-function GroupListItemBooleans({ data, icon, lines } : Props) {
+function GroupListItemBooleans({ data, icon }: Props) {
   return (
     <>
       {
@@ -16,7 +16,6 @@ function GroupListItemBooleans({ data, icon, lines } : Props) {
             key={String(children) + String(index)}
             boolean={boolean}
             icon={icon}
-            lines={lines}
           >
             {children}
           </ListItemBoolean>
