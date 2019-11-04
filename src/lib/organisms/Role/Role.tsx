@@ -1,32 +1,21 @@
 import React from 'react';
-import { Button, Modal } from 'antd-mobile'
+import ModalButton from 'lib/molecules/ModalButton';
 
 interface Props {
   inAConspiracyAgainst?: string
 }
 
 function Role({ inAConspiracyAgainst } : Props) {
-  const [revealed, setRevealed] = React.useState(false)
-
-  const toggleReveal = () => setRevealed(prevState => !prevState)
 
   return (
     <>
-      <Modal
-        footer={[{ text: 'Hide role', onPress: toggleReveal }]}
-        transparent
-        visible={revealed}
-      >
-        <div style={{ height: '100px' }}>
-          <h2>Your role:</h2>
-          <RoleDeclare inAConspiracyAgainst={inAConspiracyAgainst} />
-        </div>
-      </Modal>
-      <Button
-        onClick={toggleReveal}
+      <ModalButton
+        buttons={[{ text: 'Hide role' }]}
+        title='Your role'
+        message={<RoleDeclare inAConspiracyAgainst={inAConspiracyAgainst} />}
       >
         Reveal role
-      </Button>
+      </ModalButton>
     </>
   )
 }
