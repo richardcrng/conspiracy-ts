@@ -3,7 +3,7 @@ import { IconType } from 'react-icons/lib/cjs';
 import ListItemIcon from '../ListItemIcon';
 
 interface Props<T = any> {
-  data: React.ReactNode[]
+  nodes: React.ReactNode[]
   icon?: IconType | React.FunctionComponent
   icons?: (IconType | React.FunctionComponent)[]
   ids?: (string | number)[]
@@ -11,15 +11,15 @@ interface Props<T = any> {
   onItemClickData?: T[]
 }
 
-function GroupListItemIcons<T = any>({ data, icon, icons = [], ids = [], onItemClick, onItemClickData = [] }: Props<T>) {
+function GroupListItemIcons<T = any>({ nodes, icon, icons = [], ids = [], onItemClick, onItemClickData = [] }: Props<T>) {
   const iconArray = icon
-    ? Array(data.length).fill(icon)
+    ? Array(nodes.length).fill(icon)
     : icons
 
   return (
     <>
       {
-        data.map((children, index) => (
+        nodes.map((children, index) => (
           <ListItemIcon<T>
             key={ids[index] ? ids[index] : String(children) + String(index)}
             icon={iconArray[index]}

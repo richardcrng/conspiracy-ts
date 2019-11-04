@@ -13,7 +13,7 @@ function LobbyGames({ data = [], onGameClick } : Props) {
 
   return (
     <GroupListItemIcons<string>
-      data={gameNames}
+      nodes={gameNames}
       icon={() => <FaDoorOpen size={32} />}
       ids={gameIds}
       onItemClick={onGameClick}

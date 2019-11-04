@@ -22,7 +22,7 @@ describe('It converts an array of data into an appropriate list of elements', ()
         'Gregor',
         'Jules'
       ];
-      ({ container, getByText } = render(<GroupListItemIcons data={data} icon={IoMdAddCircle} />))
+      ({ container, getByText } = render(<GroupListItemIcons nodes={data} icon={IoMdAddCircle} />))
     })
 
     test('THEN it renders all of the text from the first element of each element in the array', () => {
@@ -47,7 +47,7 @@ describe('It can pass an onItemClick function down with appropriate data to pass
       callback = jest.fn();
       ({ container, getByText } = render(
         <GroupListItemIcons<number>
-          data={data}
+          nodes={data}
           icon={IoMdAddCircle}
           onItemClickData={onItemClickData}
           onItemClick={callback}
