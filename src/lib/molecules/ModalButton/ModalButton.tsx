@@ -23,16 +23,15 @@ function ModalButton({ buttons, children, title, message } : Props) {
     <>
       <Modal
         footer={alertButtons}
+        title={title}
         transparent
         visible={isModalVisible}
       >
-        {title}
         {message}
       </Modal>
       <Button
         onClick={() => {
           setIsModalVisible(true)
-          // Modal.alert(title, message, alertButtons)
         }}
       >
         {children}
