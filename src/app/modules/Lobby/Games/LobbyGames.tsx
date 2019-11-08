@@ -1,24 +1,31 @@
 import React from 'react';
-import { FaDoorOpen } from 'react-icons/fa';
-import GroupListItemIcons from 'lib/molecules/GroupListItemIcons';
+import LobbyGamesList from './List';
+import { Button } from 'antd-mobile';
+import CentreBottom from 'lib/atoms/CentreBottom';
 
 interface Props {
   data?: { name: string, id: string }[]
   onGameClick?(event: React.MouseEvent, gameId: string): void
+  onHostNew?(): void
 }
 
-function LobbyGames({ data = [], onGameClick } : Props) {
-  const gameNames = data.map(({ name }) => name)
-  const gameIds = data.map(({ id }) => id)
-
+function LobbyGames({ data, onHostNew, onGameClick } : Props) {
   return (
-    <GroupListItemIcons<string>
-      nodes={gameNames}
-      icon={() => <FaDoorOpen size={32} />}
-      ids={gameIds}
-      onItemClick={onGameClick}
-      onItemClickData={gameIds}
-    />
+    <>
+      <h2>Games available</h2>
+      <p>Click on a game to join</p>
+      <div style={{ height: '300px', overflowY: 'scroll' }}>
+        <LobbyGamesList
+          data={data}
+          onGameClick={onGameClick}
+        />
+      </div>
+      <CentreBottom>
+        <Button onClick={onHostNew} type='primary'>
+          Host new
+        </Button>
+      </CentreBottom>
+    </>
   )
 }
 
