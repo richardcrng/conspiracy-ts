@@ -2,21 +2,22 @@ import React from 'react';
 import { Button, Modal, WhiteSpace } from 'antd-mobile';
 import LobbyRoomPlayers from '../Players';
 import CentreBottom from 'lib/atoms/CentreBottom';
+import Player from 'types/Player';
 
 interface Props {
   areAllPlayersReady?: boolean
-  clientPlayer: { id: string, name: string, isReady?: boolean, isHost?: boolean }
+  clientPlayer: Player
   handleGameDisband?(): void
   handleGameStart?(): void
-  handlePlayerKick?(player?: { id: string, name: string, isReady?: boolean, isHost?: boolean }): void 
-  players: { id: string, name: string, isReady?: boolean, isHost?: boolean }[]
+  handlePlayerKick?(player?: Player): void 
+  players: Player[]
 }
 
 const emptyPlayer = { id: '', name: '' }
 
 function LobbyRoomHost({ areAllPlayersReady, clientPlayer, handleGameDisband, handleGameStart, handlePlayerKick, players } : Props) {
   const [isModalVisible, setIsModalVisible] = React.useState(false)
-  const [playerSelected, setPlayerSelected] = React.useState<{ id: string, name: string, isReady?: boolean, isHost?: boolean }>(emptyPlayer)
+  const [playerSelected, setPlayerSelected] = React.useState<Player>(emptyPlayer)
 
   const [modalTitle, modalMessage] = playerSelected.isHost
     ? [
