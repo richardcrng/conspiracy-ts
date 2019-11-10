@@ -6,15 +6,15 @@ import CentreBottom from 'lib/atoms/CentreBottom';
 interface Props {
   areAllPlayersReady?: boolean
   handleGameStart?(): void
-  handlePlayerKick?(player?: { id: string, name: string, ready?: boolean }): void 
-  players: { id: string, name: string, ready?: boolean }[]
+  handlePlayerKick?(player?: { id: string, name: string, isReady?: boolean }): void 
+  players: { id: string, name: string, isReady?: boolean }[]
 }
 
 const emptyPlayer = { id: '', name: '' }
 
 function LobbyRoomHost({ areAllPlayersReady, handleGameStart, handlePlayerKick, players } : Props) {
   const [isModalVisible, setIsModalVisible] = React.useState(false)
-  const [playerSelected, setPlayerSelected] = React.useState<{ id: string, name: string, ready?: boolean }>(emptyPlayer)
+  const [playerSelected, setPlayerSelected] = React.useState<{ id: string, name: string, isReady?: boolean }>(emptyPlayer)
 
   return (
     <>

@@ -6,18 +6,19 @@ import LobbyRoomHost from './Host';
 import LobbyRoomParticipant from './Participant';
 
 interface Props {
+  clientPlayer: { id: string, name: string, isReady?: boolean, isHost?: boolean }
   handleGameStart?(): void
-  handlePlayerKick?(player?: { id: string, name: string, ready?: boolean }): void 
+  handlePlayerKick?(player?: { id: string, name: string, isReady?: boolean, isHost?: boolean }): void 
   isClientHost?: boolean
   isClientReady?: boolean
   isSignupClosed?: boolean
   onClientStatusChange?(): void
   onSignupStatusChange?(): void
-  players: { id: string, name: string, ready?: boolean }[]
+  players: { id: string, name: string, isReady?: boolean, isHost?: boolean }[]
 }
 
-function LobbyRoom({ handleGameStart, handlePlayerKick, isClientHost, isClientReady, isSignupClosed, onClientStatusChange, onSignupStatusChange, players } : Props) {
-  const areAllPlayersReady = players.every(({ ready }) => ready)
+function LobbyRoom({ clientPlayer, handleGameStart, handlePlayerKick, isClientHost, isClientReady, isSignupClosed, onClientStatusChange, onSignupStatusChange, players } : Props) {
+  const areAllPlayersReady = players.every(({ isReady }) => isReady)
 
   return (
     <>

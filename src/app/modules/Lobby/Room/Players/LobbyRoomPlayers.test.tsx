@@ -8,7 +8,6 @@ import { render, fireEvent, waitForElement, getByTitle, Matcher, MatcherOptions,
 import '@testing-library/jest-dom/extend-expect'
 
 import LobbyRoomPlayers from './LobbyRoomPlayers'
-import { delay } from 'utils/test-utils'
 
 let container: HTMLElement
 let parentElement: HTMLElement | null
@@ -18,11 +17,11 @@ let getByTestId: (text: Matcher, options?: MatcherOptions | undefined) => HTMLEl
 
 describe('GIVEN a list of player names, ids and their ready status where 3 are ready', () => {
   const players = [
-    { id: 'pfew30a', name: 'Richard', ready: true },
-    { id: '39ajfe', name: 'Sally', ready: false },
-    { id: '0avnw0', name: 'Uzman', ready: false },
-    { id: '12rfhv', name: 'Marta', ready: true },
-    { id: '02rf9a', name: 'Ollie', ready: true }
+    { id: 'pfew30a', name: 'Richard', isReady: true },
+    { id: '39ajfe', name: 'Sally', isReady: false },
+    { id: '0avnw0', name: 'Uzman', isReady: false },
+    { id: '12rfhv', name: 'Marta', isReady: true },
+    { id: '02rf9a', name: 'Ollie', isReady: true }
   ]
 
   describe('WHEN this is passed to LobbyRoomPlayers', () => {

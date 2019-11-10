@@ -4,7 +4,7 @@ import CentreBottom from 'lib/atoms/CentreBottom';
 import { Button } from 'antd-mobile';
 
 interface Props {
-  players: { id: string, name: string, ready?: boolean }[]
+  players: { id: string, name: string, isReady?: boolean }[]
 }
 
 
@@ -17,6 +17,7 @@ function LobbyRoomParticipant({ players } : Props) {
       />
       <CentreBottom>
         <Button
+          // onClick={}
           type='ghost'
         >
           Leave game

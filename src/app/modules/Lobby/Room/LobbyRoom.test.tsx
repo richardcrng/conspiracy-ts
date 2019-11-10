@@ -19,11 +19,11 @@ let getByTestId: (text: Matcher, options?: MatcherOptions | undefined) => HTMLEl
 describe("Non-host", () => {
   describe("GIVEN a list of players with only some ready, the client's ready status as false, the client's host status as false and an onClientStatusChange", () => {
     const players = [
-      { id: 'pfew30a', name: 'Richard', ready: true },
-      { id: '39ajfe', name: 'Sally', ready: false },
-      { id: '0avnw0', name: 'Uzman', ready: false },
-      { id: '12rfhv', name: 'Marta', ready: true },
-      { id: '02rf9a', name: 'Ollie', ready: true }
+      { id: 'pfew30a', name: 'Richard', isReady: true },
+      { id: '39ajfe', name: 'Sally', isReady: false },
+      { id: '0avnw0', name: 'Uzman', isReady: false },
+      { id: '12rfhv', name: 'Marta', isReady: true },
+      { id: '02rf9a', name: 'Ollie', isReady: true }
     ]
 
     const isClientReady = false
@@ -36,6 +36,7 @@ describe("Non-host", () => {
         onClientStatusChange = jest.fn();
         ({ container, getByText } = render(
           <LobbyRoom
+            clientPlayer={players[0]}
             isClientReady={isClientReady}
             isClientHost={isClientHost}
             onClientStatusChange={onClientStatusChange}
@@ -86,11 +87,11 @@ describe("Non-host", () => {
 
   describe("GIVEN a list of players with all ready, the client's ready status as true, the client's host status as false and an onClientStatusChange", () => {
     const players = [
-      { id: 'pfew30a', name: 'Richard', ready: true },
-      { id: '39ajfe', name: 'Sally', ready: true },
-      { id: '0avnw0', name: 'Uzman', ready: true },
-      { id: '12rfhv', name: 'Marta', ready: true },
-      { id: '02rf9a', name: 'Ollie', ready: true }
+      { id: 'pfew30a', name: 'Richard', isReady: true },
+      { id: '39ajfe', name: 'Sally', isReady: true },
+      { id: '0avnw0', name: 'Uzman', isReady: true },
+      { id: '12rfhv', name: 'Marta', isReady: true },
+      { id: '02rf9a', name: 'Ollie', isReady: true }
     ]
 
     const isClientReady = true
@@ -103,6 +104,7 @@ describe("Non-host", () => {
         onClientStatusChange = jest.fn();
         ({ container, getByText } = render(
           <LobbyRoom
+            clientPlayer={players[0]}
             isClientReady={isClientReady}
             isClientHost={isClientHost}
             onClientStatusChange={onClientStatusChange}
@@ -155,11 +157,11 @@ describe("Non-host", () => {
 describe("Host", () => {
   describe("GIVEN a list of players with all ready, the client's ready status as true, the client's host status as true, signups closed, an onClientStatusChange, an onSignupStatusChange and a handleGameStart", () => {
     const players = [
-      { id: 'pfew30a', name: 'Richard', ready: true },
-      { id: '39ajfe', name: 'Sally', ready: true },
-      { id: '0avnw0', name: 'Uzman', ready: true },
-      { id: '12rfhv', name: 'Marta', ready: true },
-      { id: '02rf9a', name: 'Ollie', ready: true }
+      { id: 'pfew30a', name: 'Richard', isReady: true },
+      { id: '39ajfe', name: 'Sally', isReady: true },
+      { id: '0avnw0', name: 'Uzman', isReady: true },
+      { id: '12rfhv', name: 'Marta', isReady: true },
+      { id: '02rf9a', name: 'Ollie', isReady: true }
     ]
 
     const isClientReady = true
@@ -177,6 +179,7 @@ describe("Host", () => {
         onSignupStatusChange = jest.fn();
         ({ container, getByText } = render(
           <LobbyRoom
+            clientPlayer={players[0]}
             handleGameStart={handleGameStart}
             isClientReady={isClientReady}
             isClientHost={isClientHost}
@@ -240,11 +243,11 @@ describe("Host", () => {
 
   describe("GIVEN a list of players with not all ready, the client's ready status as true, the client's host status as true, an onClientStatusChange a handleGameStart and a handlePlayerKick", () => {
     const players = [
-      { id: 'pfew30a', name: 'Richard', ready: true },
-      { id: '39ajfe', name: 'Sally', ready: true },
-      { id: '0avnw0', name: 'Uzman', ready: true },
-      { id: '12rfhv', name: 'Marta', ready: true },
-      { id: '02rf9a', name: 'Ollie', ready: false }
+      { id: 'pfew30a', name: 'Richard', isReady: true },
+      { id: '39ajfe', name: 'Sally', isReady: true },
+      { id: '0avnw0', name: 'Uzman', isReady: true },
+      { id: '12rfhv', name: 'Marta', isReady: true },
+      { id: '02rf9a', name: 'Ollie', isReady: false }
     ]
 
     const isClientReady = true
@@ -261,6 +264,7 @@ describe("Host", () => {
         onClientStatusChange = jest.fn();
         ({ container, getByText } = render(
           <LobbyRoom
+            clientPlayer={players[0]}
             handleGameStart={handleGameStart}
             handlePlayerKick={handlePlayerKick}
             isClientReady={isClientReady}
@@ -342,7 +346,7 @@ describe("Host", () => {
           })
 
           test("AND the handlePlayerKick callback has been called with a first argument of the correct player", () => {
-            expect(callArgsOfCallback(handlePlayerKick)[0]).toEqual({ id: '39ajfe', name: 'Sally', ready: true })
+            expect(callArgsOfCallback(handlePlayerKick)[0]).toEqual({ id: '39ajfe', name: 'Sally', isReady: true })
           })
         })
       })

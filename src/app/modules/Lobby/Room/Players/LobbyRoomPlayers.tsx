@@ -6,13 +6,13 @@ import { List } from 'antd-mobile';
 
 interface Props {
   isClientHost?: boolean
-  onPlayerClick?(event?: React.MouseEvent, player?: { id: string, name: string, ready?: boolean }): void
-  players: { id: string, name: string, ready?: boolean }[]
+  onPlayerClick?(event?: React.MouseEvent, player?: { id: string, name: string, isReady?: boolean }): void
+  players: { id: string, name: string, isReady?: boolean }[]
 }
 
 function LobbyRoomPlayers({ isClientHost, onPlayerClick, players } : Props) {
-  const icons = players.map(({ ready }) => (
-    ready ? ReadyIcon : NotReadyIcon
+  const icons = players.map(({ isReady }) => (
+    isReady ? ReadyIcon : NotReadyIcon
   ))
 
   const thumb = isClientHost
@@ -21,7 +21,7 @@ function LobbyRoomPlayers({ isClientHost, onPlayerClick, players } : Props) {
 
   return (
     <List renderHeader='Player list'>
-      <GroupListItemIcons<{ id: string, name: string, ready?: boolean }>
+      <GroupListItemIcons<{ id: string, name: string, isReady?: boolean }>
         ids={players.map(R.prop('id'))}
         icons={icons}
         nodes={players.map(R.prop('name'))}

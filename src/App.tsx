@@ -11,13 +11,13 @@ const App: React.FC = () => {
     <div className="App">
       <WingBlank>
         <LobbyRoom
-          // isClientHost
+          clientPlayer={{ id: 'f23f0', name: 'Richard', isReady: true, isHost: false }}
           isClientReady={state}
           onClientStatusChange={() => setState(prevState => !prevState)}
           players={[
-            { id: 'f23f0', name: 'Richard', ready: true },
-            { id: 'g23f0', name: 'Jenny', ready: true },
-            { id: 'h23f0', name: 'Isabella', ready: true }
+            { id: 'f23f0', name: 'Richard', isReady: true },
+            { id: 'g23f0', name: 'Jenny', isReady: true },
+            { id: 'h23f0', name: 'Isabella', isReady: true }
           ]}
         />
       </WingBlank>
