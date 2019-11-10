@@ -7,8 +7,8 @@ import LobbyRoom from 'app/modules/Lobby/Room';
 const App: React.FC = () => {
   const [state, setState] = React.useState(false)
   const players = [
-    { id: 'f23f0', name: 'Richard', isReady: state, isHost: true },
-    { id: 'g23f0', name: 'Jenny', isReady: true },
+    { id: 'f23f0', name: 'Richard', isReady: true, isHost: true },
+    { id: 'g23f0', name: 'Jenny', isReady: state },
     { id: 'h23f0', name: 'Isabella', isReady: true }
   ]
 
