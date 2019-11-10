@@ -9,12 +9,11 @@ interface Props<T = any> {
   ids?: (string | number)[]
   onItemClick? (event?: React.MouseEvent, itemOnClickDatum?: T): void
   onItemClickData?: T[]
+  thumb?: React.ReactNode
+  thumbs?: React.ReactNode[]
 }
 
-function GroupListItemIcons<T = any>({ nodes, icon, icons = [], ids = [], onItemClick, onItemClickData = [] }: Props<T>) {
-  const iconArray = icon
-    ? Array(nodes.length).fill(icon)
-    : icons
+function GroupListItemIcons<T = any>({ nodes, icon, icons = [], ids = [], onItemClick, onItemClickData = [], thumb, thumbs = [] }: Props<T>) {
 
   return (
     <>
@@ -22,9 +21,10 @@ function GroupListItemIcons<T = any>({ nodes, icon, icons = [], ids = [], onItem
         nodes.map((children, index) => (
           <ListItemIcon<T>
             key={ids[index] ? ids[index] : String(children) + String(index)}
-            icon={iconArray[index]}
+            icon={icon ? icon : icons[index]}
             onClickDatum={onItemClickData[index]}
             onClick={onItemClick}
+            thumb={thumb ? thumb : thumbs[index]}
           >
             {children}
           </ListItemIcon>

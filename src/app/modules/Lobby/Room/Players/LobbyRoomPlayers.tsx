@@ -1,17 +1,22 @@
 import * as R from 'ramda'
 import React from 'react';
-import { FaRegGrinBeam, FaRegMehBlank } from 'react-icons/fa'
+import { FaRegGrinBeam, FaRegMeh, FaUserMinus } from 'react-icons/fa'
 import GroupListItemIcons from 'lib/molecules/GroupListItemIcons';
 import { List } from 'antd-mobile';
 
 interface Props {
+  isClientHost?: boolean
   players: { id: string, name: string, ready?: boolean }[]
 }
 
-function LobbyRoomPlayers({ players } : Props) {
+function LobbyRoomPlayers({ isClientHost, players } : Props) {
   const icons = players.map(({ ready }) => (
     ready ? ReadyIcon : NotReadyIcon
   ))
+
+  const thumb = isClientHost
+    ? <FaUserMinus color='red' data-testid='LobbyRoomPlayer-kick' size={24} />
+    : null
 
   return (
     <List renderHeader='Player list'>
@@ -19,6 +24,7 @@ function LobbyRoomPlayers({ players } : Props) {
         nodes={players.map(R.prop('name'))}
         ids={players.map(R.prop('id'))}
         icons={icons}
+        thumb={thumb}
       />
     </List>
   )
@@ -32,8 +38,8 @@ const ReadyIcon = () => (
   />
 )
 const NotReadyIcon = () => (
-  <FaRegMehBlank
-    color='red'
+  <FaRegMeh
+    color='orange'
     data-testid='LobbyRoomPlayer-notReady'
     size={32}
   />

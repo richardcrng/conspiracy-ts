@@ -55,6 +55,10 @@ describe("GIVEN a list of players with only some ready, the client's ready statu
       expect(getAllByTestId(container, 'LobbyRoomPlayer-ready')).toHaveLength(3)
     })
 
+    test('AND there are no kick player icons shown', () => {
+      expect(queryAllByTestId(container, 'LobbyRoomPlayer-kick')).toHaveLength(0)
+    })
+
     test('AND we can see that we are waiting for players to be ready', () => {
       expect(container).toHaveTextContent(/players to be ready/i)
     })
@@ -112,6 +116,10 @@ describe("GIVEN a list of players with all ready, the client's ready status as t
 
     test('AND there are five ready icons shown', () => {
       expect(getAllByTestId(container, 'LobbyRoomPlayer-ready')).toHaveLength(5)
+    })
+    
+    test('AND there are no kick player icons shown', () => {
+      expect(queryAllByTestId(container, 'LobbyRoomPlayer-kick')).toHaveLength(0)
     })
 
     test('AND we can see that we are waiting for the host to start the game', () => {
@@ -176,6 +184,10 @@ describe("GIVEN a list of players with all ready, the client's ready status as t
       expect(getAllByTestId(container, 'LobbyRoomPlayer-ready')).toHaveLength(5)
     })
 
+    test('AND there are five kick player icons shown', () => {
+      expect(getAllByTestId(container, 'LobbyRoomPlayer-kick')).toHaveLength(5)
+    })
+
     test('AND the player is told that they can start the game', () => {
       expect(container).toHaveTextContent(/ready for you to start/i)
     })
@@ -236,6 +248,10 @@ describe("GIVEN a list of players with not all ready, the client's ready status 
 
     test('AND there are four ready icons shown', () => {
       expect(getAllByTestId(container, 'LobbyRoomPlayer-ready')).toHaveLength(4)
+    })
+
+    test('AND there are five kick player icons shown', () => {
+      expect(getAllByTestId(container, 'LobbyRoomPlayer-kick')).toHaveLength(5)
     })
 
     test('AND the player is told that they are waiting for players to be ready', () => {
