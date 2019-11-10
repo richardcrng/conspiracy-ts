@@ -19,15 +19,12 @@ let getByTestId: (text: Matcher, options?: MatcherOptions | undefined) => HTMLEl
 describe("Non-host", () => {
   describe("GIVEN a list of players with only some ready, the client's ready status as false, the client's host status as false and an onClientStatusChange", () => {
     const players = [
-      { id: 'pfew30a', name: 'Richard', isReady: true },
+      { id: 'pfew30a', name: 'Richard', isReady: true, isHost: false },
       { id: '39ajfe', name: 'Sally', isReady: false },
       { id: '0avnw0', name: 'Uzman', isReady: false },
       { id: '12rfhv', name: 'Marta', isReady: true },
       { id: '02rf9a', name: 'Ollie', isReady: true }
     ]
-
-    const isClientReady = false
-    const isClientHost = false
 
     let onClientStatusChange: jest.Mock
 
@@ -37,8 +34,6 @@ describe("Non-host", () => {
         ({ container, getByText } = render(
           <LobbyRoom
             clientPlayer={players[0]}
-            isClientReady={isClientReady}
-            isClientHost={isClientHost}
             onClientStatusChange={onClientStatusChange}
             players={players}
           />
@@ -87,15 +82,12 @@ describe("Non-host", () => {
 
   describe("GIVEN a list of players with all ready, the client's ready status as true, the client's host status as false and an onClientStatusChange", () => {
     const players = [
-      { id: 'pfew30a', name: 'Richard', isReady: true },
+      { id: 'pfew30a', name: 'Richard', isReady: true, isHost: false },
       { id: '39ajfe', name: 'Sally', isReady: true },
       { id: '0avnw0', name: 'Uzman', isReady: true },
       { id: '12rfhv', name: 'Marta', isReady: true },
       { id: '02rf9a', name: 'Ollie', isReady: true }
     ]
-
-    const isClientReady = true
-    const isClientHost = false
 
     let onClientStatusChange: jest.Mock
 
@@ -105,8 +97,6 @@ describe("Non-host", () => {
         ({ container, getByText } = render(
           <LobbyRoom
             clientPlayer={players[0]}
-            isClientReady={isClientReady}
-            isClientHost={isClientHost}
             onClientStatusChange={onClientStatusChange}
             players={players}
           />
@@ -157,15 +147,13 @@ describe("Non-host", () => {
 describe("Host", () => {
   describe("GIVEN a list of players with all ready, the client's ready status as true, the client's host status as true, signups closed, an onClientStatusChange, an onSignupStatusChange and a handleGameStart", () => {
     const players = [
-      { id: 'pfew30a', name: 'Richard', isReady: true },
+      { id: 'pfew30a', name: 'Richard', isReady: true, isHost: true },
       { id: '39ajfe', name: 'Sally', isReady: true },
       { id: '0avnw0', name: 'Uzman', isReady: true },
       { id: '12rfhv', name: 'Marta', isReady: true },
       { id: '02rf9a', name: 'Ollie', isReady: true }
     ]
 
-    const isClientReady = true
-    const isClientHost = true
     const isSignupClosed = true
 
     let handleGameStart: jest.Mock
@@ -181,8 +169,6 @@ describe("Host", () => {
           <LobbyRoom
             clientPlayer={players[0]}
             handleGameStart={handleGameStart}
-            isClientReady={isClientReady}
-            isClientHost={isClientHost}
             isSignupClosed={isSignupClosed}
             onClientStatusChange={onClientStatusChange}
             onSignupStatusChange={onSignupStatusChange}
@@ -243,15 +229,12 @@ describe("Host", () => {
 
   describe("GIVEN a list of players with not all ready, the client's ready status as true, the client's host status as true, an onClientStatusChange a handleGameStart and a handlePlayerKick", () => {
     const players = [
-      { id: 'pfew30a', name: 'Richard', isReady: true },
+      { id: 'pfew30a', name: 'Richard', isReady: true, isHost: true },
       { id: '39ajfe', name: 'Sally', isReady: true },
       { id: '0avnw0', name: 'Uzman', isReady: true },
       { id: '12rfhv', name: 'Marta', isReady: true },
       { id: '02rf9a', name: 'Ollie', isReady: false }
     ]
-
-    const isClientReady = true
-    const isClientHost = true
 
     let handleGameStart: jest.Mock
     let handlePlayerKick: jest.Mock
@@ -267,8 +250,6 @@ describe("Host", () => {
             clientPlayer={players[0]}
             handleGameStart={handleGameStart}
             handlePlayerKick={handlePlayerKick}
-            isClientReady={isClientReady}
-            isClientHost={isClientHost}
             onClientStatusChange={onClientStatusChange}
             players={players}
           />

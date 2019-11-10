@@ -17,7 +17,8 @@ interface Props {
   players: { id: string, name: string, isReady?: boolean, isHost?: boolean }[]
 }
 
-function LobbyRoom({ clientPlayer, handleGameStart, handlePlayerKick, isClientHost, isClientReady, isSignupClosed, onClientStatusChange, onSignupStatusChange, players } : Props) {
+function LobbyRoom({ clientPlayer, handleGameStart, handlePlayerKick, isSignupClosed, onClientStatusChange, onSignupStatusChange, players } : Props) {
+  const { isHost: isClientHost, isReady: isClientReady } = clientPlayer;
   const areAllPlayersReady = players.every(({ isReady }) => isReady)
 
   return (
