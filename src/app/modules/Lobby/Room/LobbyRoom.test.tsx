@@ -156,18 +156,21 @@ describe("Host", () => {
 
     const isSignupClosed = true
 
+    let handleGameDisband: jest.Mock
     let handleGameStart: jest.Mock
     let onClientStatusChange: jest.Mock
     let onSignupStatusChange: jest.Mock
 
     describe('WHEN this is passed to LobbyRoom', () => {
       beforeEach(() => {
+        handleGameDisband = jest.fn();
         handleGameStart = jest.fn();
         onClientStatusChange = jest.fn();
         onSignupStatusChange = jest.fn();
         ({ container, getByText } = render(
           <LobbyRoom
             clientPlayer={players[0]}
+            handleGameDisband={handleGameDisband}
             handleGameStart={handleGameStart}
             isSignupClosed={isSignupClosed}
             onClientStatusChange={onClientStatusChange}
@@ -236,18 +239,21 @@ describe("Host", () => {
       { id: '02rf9a', name: 'Ollie', isReady: false }
     ]
 
+    let handleGameDisband: jest.Mock
     let handleGameStart: jest.Mock
     let handlePlayerKick: jest.Mock
     let onClientStatusChange: jest.Mock
 
     describe('WHEN this is passed to LobbyRoom', () => {
       beforeEach(() => {
+        handleGameDisband = jest.fn();
         handleGameStart = jest.fn();
         handlePlayerKick = jest.fn();
         onClientStatusChange = jest.fn();
         ({ container, getByText } = render(
           <LobbyRoom
             clientPlayer={players[0]}
+            handleGameDisband={handleGameDisband}
             handleGameStart={handleGameStart}
             handlePlayerKick={handlePlayerKick}
             onClientStatusChange={onClientStatusChange}
@@ -280,7 +286,7 @@ describe("Host", () => {
         expect(container).toHaveTextContent(/start game/i)
       })
 
-      describe("AND the player clicks on a player", () => {
+      describe("AND the player clicks on a non-host player", () => {
         beforeEach(async () => {
           fireEvent.click(getByText('Sally'))
           await delay(100)
@@ -328,6 +334,54 @@ describe("Host", () => {
 
           test("AND the handlePlayerKick callback has been called with a first argument of the correct player", () => {
             expect(callArgsOfCallback(handlePlayerKick)[0]).toEqual({ id: '39ajfe', name: 'Sally', isReady: true })
+          })
+        })
+      })
+
+      describe("AND the player clicks on the client player, who is host,", () => {
+        beforeEach(async () => {
+          fireEvent.click(getByText('Richard'))
+          await delay(100)
+        })
+
+        test("THEN a message appears asking if the host wants to disband the game", () => {
+          expect(container.parentElement).toHaveTextContent(/do you want to disband/i)
+        })
+
+        test('AND there is a cancel and confirm button', () => {
+          expect(container.parentElement).toHaveTextContent(/cancel/i)
+          expect(container.parentElement).toHaveTextContent(/confirm/i)
+        })
+
+        describe('AND the player clicks on cancel', () => {
+          beforeEach(async () => {
+            fireEvent.click(getByText(/cancel/i))
+            await delay(100)
+          })
+
+          test("THEN the message asking if the host wants to disband the game has disappeared", () => {
+            // await waitForElement(() => getByText(/do you want to kick/i))
+            expect(container.parentElement).not.toHaveTextContent(/do you want to disband/i)
+          })
+
+          test("AND the handleGameDisband callback has not been called", () => {
+            expect(handleGameDisband).not.toHaveBeenCalled()
+          })
+        })
+
+        describe('AND the player clicks on confirm', () => {
+          beforeEach(async () => {
+            fireEvent.click(getByText(/confirm/i))
+            await delay(100)
+          })
+
+          test("THEN the message asking if the host wants to disband the game has disappeared", () => {
+            // await waitForElement(() => getByText(/do you want to kick/i))
+            expect(container.parentElement).not.toHaveTextContent(/do you want to disband/i)
+          })
+
+          test("AND the handleGameDisband callback has been called once", () => {
+            expect(handleGameDisband).toHaveBeenCalledTimes(1)
           })
         })
       })

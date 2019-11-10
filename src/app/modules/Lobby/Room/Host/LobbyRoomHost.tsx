@@ -6,6 +6,7 @@ import CentreBottom from 'lib/atoms/CentreBottom';
 interface Props {
   areAllPlayersReady?: boolean
   clientPlayer: { id: string, name: string, isReady?: boolean, isHost?: boolean }
+  handleGameDisband?(): void
   handleGameStart?(): void
   handlePlayerKick?(player?: { id: string, name: string, isReady?: boolean, isHost?: boolean }): void 
   players: { id: string, name: string, isReady?: boolean, isHost?: boolean }[]
@@ -13,7 +14,7 @@ interface Props {
 
 const emptyPlayer = { id: '', name: '' }
 
-function LobbyRoomHost({ areAllPlayersReady, clientPlayer, handleGameStart, handlePlayerKick, players } : Props) {
+function LobbyRoomHost({ areAllPlayersReady, clientPlayer, handleGameDisband, handleGameStart, handlePlayerKick, players } : Props) {
   const [isModalVisible, setIsModalVisible] = React.useState(false)
   const [playerSelected, setPlayerSelected] = React.useState<{ id: string, name: string, isReady?: boolean, isHost?: boolean }>(emptyPlayer)
 
@@ -36,7 +37,11 @@ function LobbyRoomHost({ areAllPlayersReady, clientPlayer, handleGameStart, hand
           { text: 'Cancel', onPress: () => setIsModalVisible(false) },
           { text: 'Confirm', onPress: () => {
             setIsModalVisible(false)
-            handlePlayerKick && handlePlayerKick(playerSelected)
+            if (playerSelected.isHost) {
+              handleGameDisband && handleGameDisband()
+            } else {
+              handlePlayerKick && handlePlayerKick(playerSelected)
+            }
           }}
         ]}
         title={modalTitle}
