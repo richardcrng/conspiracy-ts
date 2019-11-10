@@ -195,3 +195,65 @@ describe("GIVEN a list of players with all ready, the client's ready status as t
     })
   })
 })
+
+describe("GIVEN a list of players with not all ready, the client's ready status as true, the client's host status as true, an onClientStatusChange and a handleGameStart", () => {
+  const players = [
+    { id: 'pfew30a', name: 'Richard', ready: true },
+    { id: '39ajfe', name: 'Sally', ready: true },
+    { id: '0avnw0', name: 'Uzman', ready: true },
+    { id: '12rfhv', name: 'Marta', ready: true },
+    { id: '02rf9a', name: 'Ollie', ready: false }
+  ]
+
+  const isClientReady = true
+  const isClientHost = true
+
+  let handleGameStart: jest.Mock
+  let onClientStatusChange: jest.Mock
+
+  describe('WHEN this is passed to LobbyRoom', () => {
+    beforeEach(() => {
+      handleGameStart = jest.fn();
+      onClientStatusChange = jest.fn();
+      ({ container, getByText } = render(
+        <LobbyRoom
+          handleGameStart={handleGameStart}
+          isClientReady={isClientReady}
+          isClientHost={isClientHost}
+          onClientStatusChange={onClientStatusChange}
+          players={players}
+        />
+      ))
+    })
+
+    test('THEN the player names are all shown', () => {
+      expect(container).toHaveTextContent('Richard')
+      expect(container).toHaveTextContent('Sally')
+      expect(container).toHaveTextContent('Uzman')
+      expect(container).toHaveTextContent('Marta')
+      expect(container).toHaveTextContent('Ollie')
+    })
+
+    test('AND there are four ready icons shown', () => {
+      expect(getAllByTestId(container, 'LobbyRoomPlayer-ready')).toHaveLength(4)
+    })
+
+    test('AND the player is told that they are waiting for players to be ready', () => {
+      expect(container).toHaveTextContent(/players to be ready/i)
+    })
+
+    test("AND there is a button for 'start game'", () => {
+      expect(container).toHaveTextContent(/start game/i)
+    })
+
+    describe("AND the player clicks on the start game button", () => {
+      beforeEach(() => {
+        fireEvent.click(getByText(/start game/i))
+      })
+
+      test("THEN the handleGameStart function is not called", () => {
+        expect(handleGameStart).not.toHaveBeenCalled()
+      })
+    })
+  })
+})
