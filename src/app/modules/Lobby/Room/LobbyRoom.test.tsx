@@ -189,7 +189,7 @@ describe("Host", () => {
         expect(getAllByTestId(container, 'LobbyRoomPlayer-ready')).toHaveLength(5)
       })
 
-      test('AND there are five kick player icons shown', () => {
+      test('AND there are four kick player icons shown', () => {
         expect(getAllByTestId(container, 'LobbyRoomPlayer-kick')).toHaveLength(5)
       })
 

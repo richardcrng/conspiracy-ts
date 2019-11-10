@@ -11,10 +11,10 @@ const App: React.FC = () => {
     <div className="App">
       <WingBlank>
         <LobbyRoom
-          clientPlayer={{ id: 'f23f0', name: 'Richard', isReady: true, isHost: false }}
+          clientPlayer={{ id: 'f23f0', name: 'Richard', isReady: true, isHost: true }}
           onClientStatusChange={() => setState(prevState => !prevState)}
           players={[
-            { id: 'f23f0', name: 'Richard', isReady: true },
+            { id: 'f23f0', name: 'Richard', isReady: true, isHost: true },
             { id: 'g23f0', name: 'Jenny', isReady: true },
             { id: 'h23f0', name: 'Isabella', isReady: true }
           ]}
