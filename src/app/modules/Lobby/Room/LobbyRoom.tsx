@@ -1,9 +1,9 @@
 import React from 'react';
-import LobbyRoomPlayers from './Players';
 import { WhiteSpace } from 'antd-mobile';
 import LobbyRoomNotice from './Notice';
 import LobbyRoomReadiness from './Readiness';
 import LobbyRoomHost from './Host';
+import LobbyRoomParticipant from './Participant';
 
 interface Props {
   handleGameStart?(): void
@@ -27,10 +27,7 @@ function LobbyRoom({ handleGameStart, handlePlayerKick, isClientHost, isClientRe
       {
         isClientHost
           ? <LobbyRoomHost {...{ areAllPlayersReady, handleGameStart, handlePlayerKick, players }} />
-          : <LobbyRoomPlayers
-            isClientHost={isClientHost}
-            players={players}
-          />
+          : <LobbyRoomParticipant {...{ players }} />
       }
     </>
   )
