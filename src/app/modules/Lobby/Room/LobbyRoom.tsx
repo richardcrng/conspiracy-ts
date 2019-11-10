@@ -1,8 +1,8 @@
-import * as R from 'ramda'
 import React from 'react';
 import LobbyRoomPlayers from './Players';
-import { List, NoticeBar, Switch, WhiteSpace, Button } from 'antd-mobile';
+import { List, Switch, WhiteSpace, Button } from 'antd-mobile';
 import CentreBottom from 'lib/atoms/CentreBottom';
+import LobbyRoomNotice from './Notice';
 
 interface Props {
   handleGameStart?(): void
@@ -17,15 +17,7 @@ function LobbyRoom({ handleGameStart, isClientHost, isClientReady, onClientStatu
 
   return (
     <>
-      <NoticeBar>
-        {
-          areAllPlayersReady
-            ? isClientHost
-              ? 'All players ready for you to start the game'
-              : 'Waiting for host to start the game'
-            : 'Waiting for all players to be ready'
-        }
-      </NoticeBar>
+      <LobbyRoomNotice {...{ areAllPlayersReady, isClientHost }} />
       <List>
         <List.Item
           extra={<Switch checked={isClientReady} />}
