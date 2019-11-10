@@ -4,16 +4,17 @@ import LobbyRoomNotice from './Notice';
 import LobbyRoomReadiness from './Readiness';
 import LobbyRoomHost from './Host';
 import LobbyRoomParticipant from './Participant';
+import Player from 'types/Player';
 
 interface Props {
-  clientPlayer: { id: string, name: string, isReady?: boolean, isHost?: boolean }
+  clientPlayer: Player
   handleGameDisband?(): void
   handleGameStart?(): void
-  handlePlayerKick?(player?: { id: string, name: string, isReady?: boolean, isHost?: boolean }): void 
+  handlePlayerKick?(player?: Player): void 
   isSignupClosed?: boolean
   onClientStatusChange?(): void
   onSignupStatusChange?(): void
-  players: { id: string, name: string, isReady?: boolean, isHost?: boolean }[]
+  players: Player[]
 }
 
 function LobbyRoom({ clientPlayer, handleGameDisband, handleGameStart, handlePlayerKick, isSignupClosed, onClientStatusChange, onSignupStatusChange, players } : Props) {

@@ -3,11 +3,12 @@ import React from 'react';
 import { FaRegGrinBeam, FaRegMeh, FaUserMinus } from 'react-icons/fa'
 import GroupListItemIcons from 'lib/molecules/GroupListItemIcons';
 import { List } from 'antd-mobile';
+import Player from 'types/Player';
 
 interface Props {
-  clientPlayer: { id: string, name: string, isReady?: boolean, isHost?: boolean }
-  onPlayerClick?(event?: React.MouseEvent, player?: { id: string, name: string, isReady?: boolean }): void
-  players: { id: string, name: string, isReady?: boolean, isHost?: boolean }[]
+  clientPlayer: Player
+  onPlayerClick?(event?: React.MouseEvent, player?: Player): void
+  players: Player[]
 }
 
 function LobbyRoomPlayers({ clientPlayer, onPlayerClick, players } : Props) {
@@ -21,7 +22,7 @@ function LobbyRoomPlayers({ clientPlayer, onPlayerClick, players } : Props) {
 
   return (
     <List renderHeader='Player list'>
-      <GroupListItemIcons<{ id: string, name: string, isReady?: boolean }>
+      <GroupListItemIcons<Player>
         ids={players.map(R.prop('id'))}
         icons={icons}
         nodes={players.map(R.prop('name'))}

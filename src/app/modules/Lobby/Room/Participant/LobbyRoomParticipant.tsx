@@ -2,10 +2,11 @@ import React from 'react';
 import LobbyRoomPlayers from '../Players';
 import CentreBottom from 'lib/atoms/CentreBottom';
 import { Button } from 'antd-mobile';
+import Player from 'types/Player';
 
 interface Props {
-  clientPlayer: { id: string, name: string, isReady?: boolean, isHost?: boolean }
-  players: { id: string, name: string, isReady?: boolean, isHost?: boolean }[]
+  clientPlayer: Player
+  players: Player[]
 }
 
 
