@@ -161,11 +161,13 @@ describe("GIVEN a list of players with all ready, the client's ready status as t
 
   let handleGameStart: jest.Mock
   let onClientStatusChange: jest.Mock
+  let onSignupStatusChange: jest.Mock
 
   describe('WHEN this is passed to LobbyRoom', () => {
     beforeEach(() => {
       handleGameStart = jest.fn();
       onClientStatusChange = jest.fn();
+      onSignupStatusChange = jest.fn();
       ({ container, getByText } = render(
         <LobbyRoom
           handleGameStart={handleGameStart}
@@ -173,6 +175,7 @@ describe("GIVEN a list of players with all ready, the client's ready status as t
           isClientHost={isClientHost}
           isSignupClosed={isSignupClosed}
           onClientStatusChange={onClientStatusChange}
+          onSignupStatusChange={onSignupStatusChange}
           players={players}
         />
       ))
@@ -204,6 +207,16 @@ describe("GIVEN a list of players with all ready, the client's ready status as t
 
     test("AND there is a button for 'start game'", () => {
       expect(container).toHaveTextContent(/start game/i)
+    })
+
+    describe("AND the client clicks on 'close signups'", () => {
+      beforeEach(() => {
+        fireEvent.click(getByText(/close signups/i))
+      })
+
+      test("THEN the onSignupStatusChange callback has been called once", () => {
+        expect(onSignupStatusChange).toHaveBeenCalledTimes(1)
+      })
     })
 
     describe("AND the player clicks on the start game button", () => {

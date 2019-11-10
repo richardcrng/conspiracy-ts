@@ -5,6 +5,6 @@ export const delay = (ms: number) =>
     }, ms);
   });
 
-export const callArgsOfCallback = (callback: jest.Mock, callNumber: number = callback.mock.calls.length - 1) => (
-  callback.mock.calls[callNumber]
+export const callArgsOfCallback = (callback: jest.Mock, callNumber: number = -1) => (
+  callback.mock.calls[callNumber >= 0 ? callNumber : callback.mock.calls.length + callNumber]
 )
