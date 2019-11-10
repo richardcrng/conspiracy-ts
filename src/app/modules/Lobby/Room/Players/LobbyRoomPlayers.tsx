@@ -2,6 +2,7 @@ import * as R from 'ramda'
 import React from 'react';
 import { FaRegGrinBeam, FaRegMehBlank } from 'react-icons/fa'
 import GroupListItemIcons from 'lib/molecules/GroupListItemIcons';
+import { List } from 'antd-mobile';
 
 interface Props {
   players: { id: string, name: string, ready?: boolean }[]
@@ -13,11 +14,13 @@ function LobbyRoomPlayers({ players } : Props) {
   ))
 
   return (
-    <GroupListItemIcons
-      nodes={players.map(R.prop('name'))}
-      ids={players.map(R.prop('id'))}
-      icons={icons}
-    />
+    <List renderHeader='Player list'>
+      <GroupListItemIcons
+        nodes={players.map(R.prop('name'))}
+        ids={players.map(R.prop('id'))}
+        icons={icons}
+      />
+    </List>
   )
 }
 

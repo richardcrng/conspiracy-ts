@@ -21,11 +21,7 @@ function LobbyRoom({ handleGameStart, isClientHost, isClientReady, onClientStatu
       <LobbyRoomNotice {...{ areAllPlayersReady, isClientHost }} />
       <LobbyRoomReadiness {... { isClientReady, onClientStatusChange }} />
       <WhiteSpace size='xl' />
-      <List renderHeader='Player list'>
-        <LobbyRoomPlayers
-          players={players}
-        />
-      </List>
+      <LobbyRoomPlayers players={players} />
       {isClientHost && (
         <CentreBottom>
           <Button
