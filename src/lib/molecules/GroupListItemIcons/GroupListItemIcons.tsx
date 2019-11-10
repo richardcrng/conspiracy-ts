@@ -8,12 +8,13 @@ interface Props<T = any> {
   icons?: (IconType | React.FunctionComponent)[]
   ids?: (string | number)[]
   onItemClick? (event?: React.MouseEvent, itemOnClickDatum?: T): void
+  onItemClicks?: ((event?: React.MouseEvent, itemOnClickDatum?: T) => void)[]
   onItemClickData?: T[]
   thumb?: React.ReactNode
   thumbs?: React.ReactNode[]
 }
 
-function GroupListItemIcons<T = any>({ nodes, icon, icons = [], ids = [], onItemClick, onItemClickData = [], thumb, thumbs = [] }: Props<T>) {
+function GroupListItemIcons<T = any>({ nodes, icon, icons = [], ids = [], onItemClick, onItemClicks = [], onItemClickData = [], thumb, thumbs = [] }: Props<T>) {
 
   return (
     <>
@@ -23,7 +24,7 @@ function GroupListItemIcons<T = any>({ nodes, icon, icons = [], ids = [], onItem
             key={ids[index] ? ids[index] : String(children) + String(index)}
             icon={icon ? icon : icons[index]}
             onClickDatum={onItemClickData[index]}
-            onClick={onItemClick}
+            onClick={onItemClick ? onItemClick : onItemClicks[index]}
             thumb={thumb ? thumb : thumbs[index]}
           >
             {children}

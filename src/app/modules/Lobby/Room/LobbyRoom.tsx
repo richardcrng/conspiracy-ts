@@ -1,23 +1,24 @@
 import React from 'react';
-import LobbyRoomPlayers from './Players';
 import { WhiteSpace } from 'antd-mobile';
 import LobbyRoomNotice from './Notice';
 import LobbyRoomReadiness from './Readiness';
 import LobbyRoomHost from './Host';
+import LobbyRoomParticipant from './Participant';
 
 interface Props {
+  clientPlayer: { id: string, name: string, isReady?: boolean, isHost?: boolean }
+  handleGameDisband?(): void
   handleGameStart?(): void
-  handlePlayerKick?(player?: { id: string, name: string, ready?: boolean }): void 
-  isClientHost?: boolean
-  isClientReady?: boolean
+  handlePlayerKick?(player?: { id: string, name: string, isReady?: boolean, isHost?: boolean }): void 
   isSignupClosed?: boolean
   onClientStatusChange?(): void
   onSignupStatusChange?(): void
-  players: { id: string, name: string, ready?: boolean }[]
+  players: { id: string, name: string, isReady?: boolean, isHost?: boolean }[]
 }
 
-function LobbyRoom({ handleGameStart, handlePlayerKick, isClientHost, isClientReady, isSignupClosed, onClientStatusChange, onSignupStatusChange, players } : Props) {
-  const areAllPlayersReady = players.every(({ ready }) => ready)
+function LobbyRoom({ clientPlayer, handleGameDisband, handleGameStart, handlePlayerKick, isSignupClosed, onClientStatusChange, onSignupStatusChange, players } : Props) {
+  const { isHost: isClientHost, isReady: isClientReady } = clientPlayer;
+  const areAllPlayersReady = players.every(({ isReady }) => isReady)
 
   return (
     <>
@@ -26,11 +27,8 @@ function LobbyRoom({ handleGameStart, handlePlayerKick, isClientHost, isClientRe
       <WhiteSpace size='xl' />
       {
         isClientHost
-          ? <LobbyRoomHost {...{ areAllPlayersReady, handleGameStart, handlePlayerKick, players }} />
-          : <LobbyRoomPlayers
-            isClientHost={isClientHost}
-            players={players}
-          />
+          ? <LobbyRoomHost {...{ areAllPlayersReady, clientPlayer, handleGameDisband, handleGameStart, handlePlayerKick, players }} />
+          : <LobbyRoomParticipant {...{ clientPlayer, players }} />
       }
     </>
   )

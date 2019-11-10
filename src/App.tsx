@@ -6,19 +6,19 @@ import LobbyRoom from 'app/modules/Lobby/Room';
 
 const App: React.FC = () => {
   const [state, setState] = React.useState(false)
+  const players = [
+    { id: 'f23f0', name: 'Richard', isReady: true, isHost: true },
+    { id: 'g23f0', name: 'Jenny', isReady: state },
+    { id: 'h23f0', name: 'Isabella', isReady: true }
+  ]
 
   return (
     <div className="App">
       <WingBlank>
         <LobbyRoom
-          isClientHost
-          isClientReady={state}
+          clientPlayer={players[1]}
           onClientStatusChange={() => setState(prevState => !prevState)}
-          players={[
-            { id: 'f23f0', name: 'Richard', ready: true },
-            { id: 'g23f0', name: 'Jenny', ready: false },
-            { id: 'h23f0', name: 'Isabella', ready: true }
-          ]}
+          players={players}
         />
       </WingBlank>
     </div>
