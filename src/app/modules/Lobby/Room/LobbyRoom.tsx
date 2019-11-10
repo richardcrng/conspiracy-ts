@@ -1,9 +1,9 @@
 import React from 'react';
 import LobbyRoomPlayers from './Players';
-import { List, Switch, WhiteSpace, Button } from 'antd-mobile';
-import CentreBottom from 'lib/atoms/CentreBottom';
+import { WhiteSpace } from 'antd-mobile';
 import LobbyRoomNotice from './Notice';
 import LobbyRoomReadiness from './Readiness';
+import LobbyRoomAdmin from './Admin';
 
 interface Props {
   handleGameStart?(): void
@@ -22,17 +22,7 @@ function LobbyRoom({ handleGameStart, isClientHost, isClientReady, onClientStatu
       <LobbyRoomReadiness {... { isClientReady, onClientStatusChange }} />
       <WhiteSpace size='xl' />
       <LobbyRoomPlayers players={players} />
-      {isClientHost && (
-        <CentreBottom>
-          <Button
-            disabled={!areAllPlayersReady}
-            onClick={handleGameStart}
-            type='primary'
-          >
-            Start game
-        </Button>
-        </CentreBottom>
-      )}
+      {isClientHost && <LobbyRoomAdmin {...{ areAllPlayersReady, handleGameStart }} />}
     </>
   )
 }
