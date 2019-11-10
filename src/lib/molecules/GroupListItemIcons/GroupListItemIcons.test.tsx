@@ -9,6 +9,7 @@ import '@testing-library/jest-dom/extend-expect'
 
 import { IoMdAddCircle } from 'react-icons/io'
 import GroupListItemIcons from './GroupListItemIcons';
+import { callArgsOfCallback } from 'utils/test-utils';
 
 let container: HTMLElement
 let getByText: (text: Matcher, options?: MatcherOptions | undefined) => HTMLElement
@@ -69,7 +70,7 @@ describe('It can pass an onItemClick function down with appropriate data to pass
       let lastCallArgs: any[]
       beforeEach(() => {
         fireEvent.click(getByText('Gregor'))
-        lastCallArgs = callback.mock.calls[callback.mock.calls.length - 1]
+        lastCallArgs = callArgsOfCallback(callback)
       })
 
       test('THEN the callback has been called once with the onItemClickData passed in', () => {
