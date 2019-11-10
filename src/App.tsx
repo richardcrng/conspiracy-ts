@@ -12,7 +12,6 @@ const App: React.FC = () => {
       <WingBlank>
         <LobbyRoom
           clientPlayer={{ id: 'f23f0', name: 'Richard', isReady: true, isHost: false }}
-          isClientReady={state}
           onClientStatusChange={() => setState(prevState => !prevState)}
           players={[
             { id: 'f23f0', name: 'Richard', isReady: true },

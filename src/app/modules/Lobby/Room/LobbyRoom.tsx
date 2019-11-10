@@ -9,8 +9,6 @@ interface Props {
   clientPlayer: { id: string, name: string, isReady?: boolean, isHost?: boolean }
   handleGameStart?(): void
   handlePlayerKick?(player?: { id: string, name: string, isReady?: boolean, isHost?: boolean }): void 
-  isClientHost?: boolean
-  isClientReady?: boolean
   isSignupClosed?: boolean
   onClientStatusChange?(): void
   onSignupStatusChange?(): void
