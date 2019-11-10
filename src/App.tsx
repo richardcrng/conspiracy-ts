@@ -16,7 +16,7 @@ const App: React.FC = () => {
           onClientStatusChange={() => setState(prevState => !prevState)}
           players={[
             { id: 'f23f0', name: 'Richard', ready: true },
-            { id: 'g23f0', name: 'Jenny', ready: true },
+            { id: 'g23f0', name: 'Jenny', ready: false },
             { id: 'h23f0', name: 'Isabella', ready: true }
           ]}
         />
