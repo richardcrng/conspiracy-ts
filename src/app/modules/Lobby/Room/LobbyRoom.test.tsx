@@ -16,66 +16,43 @@ let getByRole: (text: Matcher, options?: MatcherOptions | undefined) => HTMLElem
 let getByText: (text: Matcher, options?: MatcherOptions | undefined) => HTMLElement
 let getByTestId: (text: Matcher, options?: MatcherOptions | undefined) => HTMLElement
 
-describe.skip('GIVEN a list of games, a game click handler and a create game handler', () => {
-  const games = [
-    { name: 'First game', id: '3f110' },
-    { name: 'Second game', id: 'few39' }
+describe("GIVEN a list of players with ready status, the client's ready status as false, the client's host status as false and an onClientStatusChange", () => {
+  const players = [
+    { id: 'pfew30a', name: 'Richard', ready: true },
+    { id: '39ajfe', name: 'Sally', ready: false },
+    { id: '0avnw0', name: 'Uzman', ready: false },
+    { id: '12rfhv', name: 'Marta', ready: true },
+    { id: '02rf9a', name: 'Ollie', ready: true }
   ]
 
-  let handleGameClick: jest.Mock
-  let handleCreateGame: jest.Mock
+  const isClientReady = false
+  const isClientHost = false
+
+  let onClientStatusChange: jest.Mock
 
   describe('WHEN this is passed to Lobby', () => {
     beforeEach(() => {
-      handleGameClick = jest.fn();
-      handleCreateGame = jest.fn();
+      onClientStatusChange = jest.fn();
       ({ container, getByText } = render(
         <LobbyRoom
-          data={games}
-          onGameClick={handleGameClick}
-          onHostNew={handleCreateGame}
+          isClientReady={isClientReady}
+          isClientHost={isClientHost}
+          onClientStatusChange={onClientStatusChange}
+          players={players}
         />
       ))
     })
 
-    test('THEN the games are all listed', () => {
-      expect(container).toHaveTextContent('First game')
-      expect(container).toHaveTextContent('Second game')
+    test('THEN the player names are all shown', () => {
+      expect(container).toHaveTextContent('Richard')
+      expect(container).toHaveTextContent('Sally')
+      expect(container).toHaveTextContent('Uzman')
+      expect(container).toHaveTextContent('Marta')
+      expect(container).toHaveTextContent('Ollie')
     })
 
-    test('AND a host new button is listed', () => {
-      expect(container).toHaveTextContent(/host new/i)
-    })
-
-    describe('AND when the first game is clicked', () => {
-      let lastCallArgs: any[]
-      beforeEach(() => {
-        fireEvent.click(getByText('First game'))
-        lastCallArgs = handleGameClick.mock.calls[handleGameClick.mock.calls.length - 1]
-      })
-
-      test('THEN the handleGameClick function has been called with the correct game id', () => {
-        expect(handleGameClick).toHaveBeenCalled()
-        expect(lastCallArgs).toContain('3f110')
-        expect(handleCreateGame).not.toHaveBeenCalled()
-      })
-
-      test('AND the second argument specifically is game id', () => {
-        expect(lastCallArgs[1]).toBe('3f110')
-      })
-    })
-
-    describe('AND when the host new button is clicked', () => {
-      let lastCallArgs: any[]
-      beforeEach(() => {
-        fireEvent.click(getByText(/host new/i))
-        lastCallArgs = handleGameClick.mock.calls[handleGameClick.mock.calls.length - 1]
-      })
-
-      test('THEN the handleCreateGame function has been calle', () => {
-        expect(handleCreateGame).toHaveBeenCalled()
-        expect(handleGameClick).not.toHaveBeenCalled()
-      })
+    test('AND there are three ready icons shown', () => {
+      expect(getAllByTestId(container, 'LobbyRoomPlayer-ready')).toHaveLength(3)
     })
   })
 })

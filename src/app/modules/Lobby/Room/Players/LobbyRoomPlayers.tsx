@@ -1,6 +1,6 @@
 import * as R from 'ramda'
 import React from 'react';
-import { IoMdCheckboxOutline } from 'react-icons/io'
+import { FaRegGrinBeam, FaRegMehBlank } from 'react-icons/fa'
 import GroupListItemIcons from 'lib/molecules/GroupListItemIcons';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 
 function LobbyRoomPlayers({ players } : Props) {
   const icons = players.map(({ ready }) => (
-    ready ? iconReady : noIcon
+    ready ? ReadyIcon : NotReadyIcon
   ))
 
   return (
@@ -21,7 +21,19 @@ function LobbyRoomPlayers({ players } : Props) {
   )
 }
 
-const iconReady = () => <IoMdCheckboxOutline data-testid='LobbyRoomPlayer-ready' />
-const noIcon = () => null
+const ReadyIcon = () => (
+  <FaRegGrinBeam
+    color='green'
+    data-testid='LobbyRoomPlayer-ready'
+    size={32}
+  />
+)
+const NotReadyIcon = () => (
+  <FaRegMehBlank
+    color='red'
+    data-testid='LobbyRoomPlayer-notReady'
+    size={32}
+  />
+)
 
 export default LobbyRoomPlayers;
