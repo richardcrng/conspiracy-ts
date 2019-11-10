@@ -37,11 +37,9 @@ function LobbyRoomHost({ areAllPlayersReady, clientPlayer, handleGameDisband, ha
           { text: 'Cancel', onPress: () => setIsModalVisible(false) },
           { text: 'Confirm', onPress: () => {
             setIsModalVisible(false)
-            if (playerSelected.isHost) {
-              handleGameDisband && handleGameDisband()
-            } else {
-              handlePlayerKick && handlePlayerKick(playerSelected)
-            }
+            playerSelected.isHost
+              ? handleGameDisband && handleGameDisband()
+              : handlePlayerKick && handlePlayerKick(playerSelected)
           }}
         ]}
         title={modalTitle}
