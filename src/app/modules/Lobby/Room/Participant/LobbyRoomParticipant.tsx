@@ -4,14 +4,16 @@ import CentreBottom from 'lib/atoms/CentreBottom';
 import { Button } from 'antd-mobile';
 
 interface Props {
-  players: { id: string, name: string, isReady?: boolean }[]
+  clientPlayer: { id: string, name: string, isReady?: boolean, isHost?: boolean }
+  players: { id: string, name: string, isReady?: boolean, isHost?: boolean }[]
 }
 
 
-function LobbyRoomParticipant({ players } : Props) {
+function LobbyRoomParticipant({ clientPlayer, players } : Props) {
   return (
     <>
       <LobbyRoomPlayers
+        clientPlayer={clientPlayer}
         isClientHost={false}
         players={players}
       />

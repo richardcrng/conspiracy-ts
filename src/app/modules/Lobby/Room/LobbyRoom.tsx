@@ -26,8 +26,8 @@ function LobbyRoom({ clientPlayer, handleGameStart, handlePlayerKick, isSignupCl
       <WhiteSpace size='xl' />
       {
         isClientHost
-          ? <LobbyRoomHost {...{ areAllPlayersReady, handleGameStart, handlePlayerKick, players }} />
-          : <LobbyRoomParticipant {...{ players }} />
+          ? <LobbyRoomHost {...{ areAllPlayersReady, clientPlayer, handleGameStart, handlePlayerKick, players }} />
+          : <LobbyRoomParticipant {...{ clientPlayer, players }} />
       }
     </>
   )

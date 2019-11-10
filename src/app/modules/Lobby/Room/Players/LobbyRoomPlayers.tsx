@@ -5,9 +5,10 @@ import GroupListItemIcons from 'lib/molecules/GroupListItemIcons';
 import { List } from 'antd-mobile';
 
 interface Props {
+  clientPlayer: { id: string, name: string, isReady?: boolean, isHost?: boolean }
   isClientHost?: boolean
   onPlayerClick?(event?: React.MouseEvent, player?: { id: string, name: string, isReady?: boolean }): void
-  players: { id: string, name: string, isReady?: boolean }[]
+  players: { id: string, name: string, isReady?: boolean, isHost?: boolean }[]
 }
 
 function LobbyRoomPlayers({ isClientHost, onPlayerClick, players } : Props) {
