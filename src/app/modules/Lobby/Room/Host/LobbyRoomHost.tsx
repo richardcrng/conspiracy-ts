@@ -30,12 +30,12 @@ function LobbyRoomHost({ areAllPlayersReady, handleGameStart, handlePlayerKick, 
         footer={[
           { text: 'Cancel', onPress: () => setIsModalVisible(false) },
           { text: 'Confirm', onPress: () => {
-            handlePlayerKick && handlePlayerKick(playerSelected)
-            setPlayerSelected(emptyPlayer)
             setIsModalVisible(false)
+            handlePlayerKick && handlePlayerKick(playerSelected)
           }}
         ]}
         title={`Do you want to kick ${playerSelected.name}?`}
+        transparent
         visible={isModalVisible}
       >
         This cannot be undone.

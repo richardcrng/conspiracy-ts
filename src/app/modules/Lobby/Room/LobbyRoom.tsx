@@ -3,7 +3,6 @@ import LobbyRoomPlayers from './Players';
 import { WhiteSpace } from 'antd-mobile';
 import LobbyRoomNotice from './Notice';
 import LobbyRoomReadiness from './Readiness';
-import LobbyRoomAdmin from './Admin';
 import LobbyRoomHost from './Host';
 
 interface Props {
