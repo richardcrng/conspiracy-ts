@@ -8,7 +8,7 @@ import { render, fireEvent, waitForElement, getByTitle, Matcher, MatcherOptions,
 import '@testing-library/jest-dom/extend-expect'
 
 import LobbyRoom from './LobbyRoom'
-import { delay } from 'utils/test-utils'
+import { delay, callArgsOfCallback } from 'utils/test-utils'
 
 let container: HTMLElement
 let parentElement: HTMLElement | null
@@ -122,6 +122,10 @@ describe("GIVEN a list of players with all ready, the client's ready status as t
       expect(queryAllByTestId(container, 'LobbyRoomPlayer-kick')).toHaveLength(0)
     })
 
+    test('AND the player can not see a close signups power', () => {
+      expect(container).not.toHaveTextContent(/close signups/i)
+    })
+
     test('AND we can see that we are waiting for the host to start the game', () => {
       expect(container).toHaveTextContent(/host to start/i)
     })
@@ -142,7 +146,7 @@ describe("GIVEN a list of players with all ready, the client's ready status as t
   })
 })
 
-describe("GIVEN a list of players with all ready, the client's ready status as true, the client's host status as true, an onClientStatusChange and a handleGameStart", () => {
+describe("GIVEN a list of players with all ready, the client's ready status as true, the client's host status as true, signups closed, an onClientStatusChange, an onSignupStatusChange and a handleGameStart", () => {
   const players = [
     { id: 'pfew30a', name: 'Richard', ready: true },
     { id: '39ajfe', name: 'Sally', ready: true },
@@ -153,6 +157,7 @@ describe("GIVEN a list of players with all ready, the client's ready status as t
 
   const isClientReady = true
   const isClientHost = true
+  const isSignupClosed = true
 
   let handleGameStart: jest.Mock
   let onClientStatusChange: jest.Mock
@@ -166,6 +171,7 @@ describe("GIVEN a list of players with all ready, the client's ready status as t
           handleGameStart={handleGameStart}
           isClientReady={isClientReady}
           isClientHost={isClientHost}
+          isSignupClosed={isSignupClosed}
           onClientStatusChange={onClientStatusChange}
           players={players}
         />
@@ -188,6 +194,10 @@ describe("GIVEN a list of players with all ready, the client's ready status as t
       expect(getAllByTestId(container, 'LobbyRoomPlayer-kick')).toHaveLength(5)
     })
 
+    test('AND the player can see their close signups power', () => {
+      expect(container).toHaveTextContent(/close signups/i)
+    })
+
     test('AND the player is told that they can start the game', () => {
       expect(container).toHaveTextContent(/ready for you to start/i)
     })
@@ -208,7 +218,7 @@ describe("GIVEN a list of players with all ready, the client's ready status as t
   })
 })
 
-describe("GIVEN a list of players with not all ready, the client's ready status as true, the client's host status as true, an onClientStatusChange and a handleGameStart", () => {
+describe("GIVEN a list of players with not all ready, the client's ready status as true, the client's host status as true, an onClientStatusChange, an onPlayerClick and a handleGameStart", () => {
   const players = [
     { id: 'pfew30a', name: 'Richard', ready: true },
     { id: '39ajfe', name: 'Sally', ready: true },
@@ -222,17 +232,20 @@ describe("GIVEN a list of players with not all ready, the client's ready status 
 
   let handleGameStart: jest.Mock
   let onClientStatusChange: jest.Mock
+  let onPlayerClick: jest.Mock
 
   describe('WHEN this is passed to LobbyRoom', () => {
     beforeEach(() => {
       handleGameStart = jest.fn();
       onClientStatusChange = jest.fn();
+      onPlayerClick = jest.fn();
       ({ container, getByText } = render(
         <LobbyRoom
           handleGameStart={handleGameStart}
           isClientReady={isClientReady}
           isClientHost={isClientHost}
           onClientStatusChange={onClientStatusChange}
+          onPlayerClick={onPlayerClick}
           players={players}
         />
       ))
@@ -260,6 +273,21 @@ describe("GIVEN a list of players with not all ready, the client's ready status 
 
     test("AND there is a button for 'start game'", () => {
       expect(container).toHaveTextContent(/start game/i)
+    })
+
+    describe("AND the player clicks on a player", () => {
+      beforeEach(() => {
+        fireEvent.click(getByText('Sally'))
+      })
+
+      test("THEN the onPlayerClick function is called once", () => {
+        expect(onPlayerClick).toHaveBeenCalledTimes(1)
+      })
+
+      test("AND it has been called with the right player's information as the second argument", () => {
+        const argsCalledWith = callArgsOfCallback(onPlayerClick)
+        expect(argsCalledWith[1]).toEqual({ id: '39ajfe', name: 'Sally', ready: true })
+      })
     })
 
     describe("AND the player clicks on the start game button", () => {
