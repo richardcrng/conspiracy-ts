@@ -289,13 +289,54 @@ describe("GIVEN a list of players with not all ready, the client's ready status 
     })
 
     describe("AND the player clicks on a player", () => {
-      beforeEach(() => {
+      beforeEach(async () => {
         fireEvent.click(getByText('Sally'))
+        await delay(100)
       })
 
       test("THEN a message appears asking if the host wants to kick the player", () => {
-        // await waitForElement(() => getByText(/do you want to kick/i))
         expect(container.parentElement).toHaveTextContent(/do you want to kick Sally/i)
+      })
+
+      test('AND there is a cancel and confirm button', () => {
+        expect(container.parentElement).toHaveTextContent(/cancel/i)
+        expect(container.parentElement).toHaveTextContent(/confirm/i)
+      })
+
+      describe('AND the player clicks on cancel', () => {
+        beforeEach(async () => {
+          fireEvent.click(getByText(/cancel/i))
+          await delay(100)
+        })
+
+        test("THEN the message asking if the host wants to kick the player has disappeared", () => {
+          // await waitForElement(() => getByText(/do you want to kick/i))
+          expect(container.parentElement).not.toHaveTextContent(/do you want to kick Sally/i)
+        })
+
+        test("AND the handlePlayerKick callback has not been called", () => {
+          expect(handlePlayerKick).not.toHaveBeenCalled()
+        })
+      })
+
+      describe('AND the player clicks on confirm', () => {
+        beforeEach(async () => {
+          fireEvent.click(getByText(/confirm/i))
+          await delay(100)
+        })
+
+        test("THEN the message asking if the host wants to kick the player has disappeared", () => {
+          // await waitForElement(() => getByText(/do you want to kick/i))
+          expect(container.parentElement).not.toHaveTextContent(/do you want to kick Sally/i)
+        })
+
+        test("AND the handlePlayerKick callback has been called once", () => {
+          expect(handlePlayerKick).toHaveBeenCalledTimes(1)
+        })
+
+        test("AND the handlePlayerKick callback has been called with a first argument of the correct player", () => {
+          expect(callArgsOfCallback(handlePlayerKick)[0]).toEqual({ id: '39ajfe', name: 'Sally', ready: true })
+        })
       })
     })
 

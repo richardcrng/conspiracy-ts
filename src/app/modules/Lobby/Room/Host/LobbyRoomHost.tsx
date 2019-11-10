@@ -29,7 +29,7 @@ function LobbyRoomHost({ areAllPlayersReady, handleGameStart, handlePlayerKick, 
       <Modal
         footer={[
           { text: 'Cancel', onPress: () => setIsModalVisible(false) },
-          { text: 'Yes', onPress: () => {
+          { text: 'Confirm', onPress: () => {
             handlePlayerKick && handlePlayerKick(playerSelected)
             setPlayerSelected(emptyPlayer)
             setIsModalVisible(false)
