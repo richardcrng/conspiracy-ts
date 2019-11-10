@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Modal } from 'antd-mobile';
+import { Button, Modal, WhiteSpace } from 'antd-mobile';
 import LobbyRoomPlayers from '../Players';
 import CentreBottom from 'lib/atoms/CentreBottom';
 
@@ -19,8 +19,14 @@ function LobbyRoomHost({ areAllPlayersReady, clientPlayer, handleGameDisband, ha
   const [playerSelected, setPlayerSelected] = React.useState<{ id: string, name: string, isReady?: boolean, isHost?: boolean }>(emptyPlayer)
 
   const [modalTitle, modalMessage] = playerSelected.isHost
-    ? ['Do you want to disband the game?', 'Since you are the host, kicking yourself will disband the game.']
-    : [`Do you want to kick ${playerSelected.name}?`, 'This will remove them from your game.']
+    ? [
+        'Do you want to disband the game?',
+        'This action will remove yourself and all players from this game, and delete the game itself.'
+      ]
+    : [
+        `Do you want to kick ${playerSelected.name}?`,
+        'This will remove them from your game.'
+      ]
 
   return (
     <>
@@ -46,7 +52,8 @@ function LobbyRoomHost({ areAllPlayersReady, clientPlayer, handleGameDisband, ha
         transparent
         visible={isModalVisible}
       >
-        {modalMessage} This cannot be undone.
+        <p>{modalMessage}</p>
+        <p><b>This cannot be undone.</b></p>
       </Modal>
       <CentreBottom>
         <Button
@@ -55,6 +62,16 @@ function LobbyRoomHost({ areAllPlayersReady, clientPlayer, handleGameDisband, ha
           type='primary'
         >
           Start game
+        </Button>
+        <WhiteSpace size='md' />
+        <Button
+          onClick={() => {
+            setPlayerSelected(clientPlayer)
+            setIsModalVisible(true)
+          }}
+          type='warning'
+        >
+          Disband game
         </Button>
       </CentreBottom>
     </>

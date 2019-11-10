@@ -208,6 +208,10 @@ describe("Host", () => {
         expect(container).toHaveTextContent(/start game/i)
       })
 
+      test("AND there is a button for 'disband game'", () => {
+        expect(container).toHaveTextContent(/disband game/i)
+      })
+
       describe("AND the client clicks on 'close signups'", () => {
         beforeEach(() => {
           fireEvent.click(getByText(/close signups/i))
@@ -225,6 +229,53 @@ describe("Host", () => {
 
         test("THEN the handleGameStart function is called once", () => {
           expect(handleGameStart).toHaveBeenCalledTimes(1)
+        })
+      })
+
+      describe("AND the player clicks on the disband game button", () => {
+        beforeEach(() => {
+          fireEvent.click(getByText(/disband game/i))
+        })
+
+        test("THEN a message appears asking if the host wants to disband the game", () => {
+          expect(container.parentElement).toHaveTextContent(/do you want to disband/i)
+        })
+
+        test('AND there is a cancel and confirm button', () => {
+          expect(container.parentElement).toHaveTextContent(/cancel/i)
+          expect(container.parentElement).toHaveTextContent(/confirm/i)
+        })
+
+        describe('AND the player clicks on cancel', () => {
+          beforeEach(async () => {
+            fireEvent.click(getByText(/cancel/i))
+            await delay(100)
+          })
+
+          test("THEN the message asking if the host wants to disband the game has disappeared", () => {
+            // await waitForElement(() => getByText(/do you want to kick/i))
+            expect(container.parentElement).not.toHaveTextContent(/do you want to disband/i)
+          })
+
+          test("AND the handleGameDisband callback has not been called", () => {
+            expect(handleGameDisband).not.toHaveBeenCalled()
+          })
+        })
+
+        describe('AND the player clicks on confirm', () => {
+          beforeEach(async () => {
+            fireEvent.click(getByText(/confirm/i))
+            await delay(100)
+          })
+
+          test("THEN the message asking if the host wants to disband the game has disappeared", () => {
+            // await waitForElement(() => getByText(/do you want to kick/i))
+            expect(container.parentElement).not.toHaveTextContent(/do you want to disband/i)
+          })
+
+          test("AND the handleGameDisband callback has been called once", () => {
+            expect(handleGameDisband).toHaveBeenCalledTimes(1)
+          })
         })
       })
     })
