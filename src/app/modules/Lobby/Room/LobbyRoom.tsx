@@ -3,6 +3,7 @@ import LobbyRoomPlayers from './Players';
 import { List, Switch, WhiteSpace, Button } from 'antd-mobile';
 import CentreBottom from 'lib/atoms/CentreBottom';
 import LobbyRoomNotice from './Notice';
+import LobbyRoomReadiness from './Readiness';
 
 interface Props {
   handleGameStart?(): void
@@ -18,23 +19,17 @@ function LobbyRoom({ handleGameStart, isClientHost, isClientReady, onClientStatu
   return (
     <>
       <LobbyRoomNotice {...{ areAllPlayersReady, isClientHost }} />
-      <List>
-        <List.Item
-          extra={<Switch checked={isClientReady} />}
-          onClick={onClientStatusChange}
-        >
-          Ready to begin?
-        </List.Item>
-      </List>
+      <LobbyRoomReadiness {... { isClientReady, onClientStatusChange }} />
       <WhiteSpace size='xl' />
       <List renderHeader='Player list'>
         <LobbyRoomPlayers
           players={players}
         />
       </List>
-      {isClientHost && areAllPlayersReady && (
+      {isClientHost && (
         <CentreBottom>
           <Button
+            disabled={!areAllPlayersReady}
             onClick={handleGameStart}
             type='primary'
           >
