@@ -27,7 +27,7 @@ describe('GIVEN a list of player names, ids and their ready status where 3 are r
   describe('WHEN this is passed to LobbyRoomPlayers', () => {
     beforeEach(() => {
       ({ container, getByText } = render(
-        <LobbyRoomPlayers players={players} />
+        <LobbyRoomPlayers clientPlayer={players[0]} players={players} />
       ))
     })
 

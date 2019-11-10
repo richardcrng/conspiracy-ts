@@ -21,7 +21,6 @@ function LobbyRoomHost({ areAllPlayersReady, clientPlayer, handleGameStart, hand
     <>
       <LobbyRoomPlayers
         clientPlayer={clientPlayer}
-        isClientHost
         onPlayerClick={(event, player = emptyPlayer) => {
           setPlayerSelected(player)
           setIsModalVisible(true)

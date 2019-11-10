@@ -14,7 +14,6 @@ function LobbyRoomParticipant({ clientPlayer, players } : Props) {
     <>
       <LobbyRoomPlayers
         clientPlayer={clientPlayer}
-        isClientHost={false}
         players={players}
       />
       <CentreBottom>
