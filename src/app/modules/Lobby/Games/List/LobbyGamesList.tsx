@@ -1,3 +1,4 @@
+import * as R from 'ramda'
 import React from 'react';
 import { FaDoorOpen } from 'react-icons/fa';
 import GroupListItemIcons from 'lib/molecules/GroupListItemIcons';
@@ -8,8 +9,8 @@ interface Props {
 }
 
 function LobbyGamesList({ data = [], onGameClick } : Props) {
-  const gameNames = data.map(({ name }) => name)
-  const gameIds = data.map(({ id }) => id)
+  const gameNames = data.map(R.prop('name'))
+  const gameIds = data.map(R.prop('id'))
 
   return (
     <GroupListItemIcons<string>
