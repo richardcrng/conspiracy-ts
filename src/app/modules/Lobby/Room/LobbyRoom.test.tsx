@@ -231,7 +231,7 @@ describe("GIVEN a list of players with all ready, the client's ready status as t
   })
 })
 
-describe("GIVEN a list of players with not all ready, the client's ready status as true, the client's host status as true, an onClientStatusChange, an onPlayerClick and a handleGameStart", () => {
+describe("GIVEN a list of players with not all ready, the client's ready status as true, the client's host status as true, an onClientStatusChange a handleGameStart and a handlePlayerKick", () => {
   const players = [
     { id: 'pfew30a', name: 'Richard', ready: true },
     { id: '39ajfe', name: 'Sally', ready: true },
@@ -244,21 +244,21 @@ describe("GIVEN a list of players with not all ready, the client's ready status 
   const isClientHost = true
 
   let handleGameStart: jest.Mock
+  let handlePlayerKick: jest.Mock
   let onClientStatusChange: jest.Mock
-  let onPlayerClick: jest.Mock
 
   describe('WHEN this is passed to LobbyRoom', () => {
     beforeEach(() => {
       handleGameStart = jest.fn();
+      handlePlayerKick = jest.fn();
       onClientStatusChange = jest.fn();
-      onPlayerClick = jest.fn();
       ({ container, getByText } = render(
         <LobbyRoom
           handleGameStart={handleGameStart}
+          handlePlayerKick={handlePlayerKick}
           isClientReady={isClientReady}
           isClientHost={isClientHost}
           onClientStatusChange={onClientStatusChange}
-          onPlayerClick={onPlayerClick}
           players={players}
         />
       ))
@@ -293,13 +293,9 @@ describe("GIVEN a list of players with not all ready, the client's ready status 
         fireEvent.click(getByText('Sally'))
       })
 
-      test("THEN the onPlayerClick function is called once", () => {
-        expect(onPlayerClick).toHaveBeenCalledTimes(1)
-      })
-
-      test("AND it has been called with the right player's information as the second argument", () => {
-        const argsCalledWith = callArgsOfCallback(onPlayerClick)
-        expect(argsCalledWith[1]).toEqual({ id: '39ajfe', name: 'Sally', ready: true })
+      test("THEN a message appears asking if the host wants to kick the player", () => {
+        // await waitForElement(() => getByText(/do you want to kick/i))
+        expect(container.parentElement).toHaveTextContent(/do you want to kick Sally/i)
       })
     })
 
